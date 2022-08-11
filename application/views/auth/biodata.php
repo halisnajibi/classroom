@@ -31,57 +31,60 @@
      <div class="authincation-content">
       <div class="row no-gutters">
        <div class="col-xl-12">
+
         <div class="auth-form">
          <div class="text-center mb-3">
           <a href="<?= base_url() ?>"><img src="<?= base_url('assets/template/images/logo.png') ?>" alt="" width="100"></a>
          </div>
-         <h4 class="text-center mb-4">Register your account</h4>
-         <form action="<?= base_url('auth/regestrasi') ?>" method="POST">
+         <h4 class="text-center mb-4">Personal</h4>
+         <?= $this->session->flashdata('message') ?>
+         <form action="<?= base_url('auth/biodata') ?>" method="POST">
+          <?php
+          $data = $this->session->userdata('username');
+          ?>
+          <input type="hidden" name="npm" value="<?= $data ?>">
           <div class="mb-3">
-           <label class="mb-1"><strong>Username</strong></label>
-           <input type="text" class="form-control" placeholder="Nomor Pokok Siswa/Guru" name="username">
-           <?= form_error('username', '<small class="text-danger pl-3">', '</small>'); ?>
+           <label class="mb-1"><strong>Nama</strong></label>
+           <input type="text" class="form-control" placeholder="Nama" name="nama">
+           <?= form_error('nama', '<small class="text-danger pl-3">', '</small>'); ?>
           </div>
-          <!-- <div class="mb-3">
-           <label class="mb-1"><strong>Name</strong></label>
-           <input type="text" class="form-control" placeholder="Nama Lengkap">
-          </div>
-
           <div class="mb-3">
-           <label class="mb-1"><strong>Phone</strong></label>
-           <input type="text" class="form-control" placeholder="Phone">
+           <label class="form-label">Jenis Kelamin</label>
+           <select class="default-select  form-control wide" name="jk">
+            <option>--Pilih--</option>
+            <option value="laki-laki">Laki-Laki</option>
+            <option value="perempuan">Perempuan</option>
+           </select>
           </div>
           <div class="mb-3">
            <label class="mb-1"><strong>Email</strong></label>
-           <input type="text" class="form-control" placeholder="Email">
-          </div> -->
-
-          <div class="mb-3">
-           <label class="mb-1"><strong>Password</strong></label>
-           <input type="password" class="form-control" placeholder="Password" name="password1">
-           <?= form_error('password1', '<small class="text-danger pl-3">', '</small>'); ?>
+           <input type="text" class="form-control" placeholder="example@gamil.com" name="email">
+           <?= form_error('email', '<small class="text-danger pl-3">', '</small>'); ?>
           </div>
           <div class="mb-3">
-           <label class="mb-1"><strong>Confirm Password</strong></label>
-           <input type="password" class="form-control" placeholder="Password" name="password2">
-           <?= form_error('password2', '<small class="text-danger pl-3">', '</small>'); ?>
+           <label class="mb-1"><strong>Tanggal Lahir</strong></label>
+           <input type="date" class="form-control" name="tanggal_lahir">
+           <?= form_error('tanggal_lahir', '<small class="text-danger pl-3">', '</small>'); ?>
           </div>
           <div class="mb-3">
-           <label class="form-label">Level</label>
-           <select class="default-select  form-control wide" name="level">
+           <label class="mb-1"><strong>Tempat Lahir</strong></label>
+           <input type="text" class="form-control" placeholder="Tempat Lahir" name="tempat_lahir">
+           <?= form_error('tempat_lahir', '<small class="text-danger pl-3">', '</small>'); ?>
+          </div>
+          <div class="mb-3">
+           <label class="form-label">Kelas</label>
+           <select class="default-select  form-control wide" name="kelas">
             <option>--Pilih--</option>
-            <option value="3">Guru</option>
-            <option value="2">Siswa</option>
+            <?php foreach ($kelas as $k) : ?>
+             <option value="<?= $k['id_kelas'] ?>"><?= $k['kelas'] ?></option>
+            <?php endforeach; ?>
            </select>
           </div>
           <div class="text-center mt-4">
-           <button type="submit" class="btn btn-primary btn-block">Register</button>
+           <button type="submit" class="btn btn-primary btn-block">Save</button>
           </div>
 
          </form>
-         <div class="new-account mt-3">
-          <button type="submit" class="btn btn-secondary btn-block">Log In</button>
-         </div>
         </div>
        </div>
       </div>

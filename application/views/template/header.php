@@ -81,7 +81,7 @@
             <ul class="navbar-nav header-right">
               <li class="nav-item dropdown  header-profile">
                 <a class="nav-link" href="javascript:void(0);" role="button" data-bs-toggle="dropdown">
-                  <img src="<?= base_url('assets/user/profiel/default.png') ?>" width="56" alt="">
+                  <img src="<?= base_url('assets/user/profiel/' . $user['foto']) ?>" width="56" alt="">
                 </a>
                 <div class="dropdown-menu dropdown-menu-end">
                   <a href="app-profile.html" class="dropdown-item ai-icon">

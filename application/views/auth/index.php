@@ -18,7 +18,7 @@
     <title>Haliz Classroom | Login</title>
 
     <!-- FAVICONS ICON -->
-    <link rel="shortcut icon" type="image/png" href="<?= base_url('assets/user/icon/hc.png') ?>">
+    <link rel="shortcut icon" type="image/png" href="<?= base_url('assets/template/images/hc.png') ?>">
     <link href="<?= base_url('assets/template') ?>/css/style.css" rel="stylesheet">
 </head>
 
@@ -35,14 +35,17 @@
                                         <a href="<?= base_url() ?>"><img src="<?= base_url('assets/template/images/logo.png') ?>" alt="" width="100"></a>
                                     </div>
                                     <h4 class="text-center mb-4">Log in your account</h4>
-                                    <form action="">
+                                    <?= $this->session->flashdata('message') ?>
+                                    <form action="<?= base_url('auth') ?>" method="post">
                                         <div class="mb-3">
-                                            <label class="mb-1"><strong>Npm</strong></label>
-                                            <input type="text" class="form-control" name="username" placeholder="Nomor Pokok Mahasiswa">
+                                            <label class="mb-1"><strong>Username</strong></label>
+                                            <input type="text" class="form-control" name="username" placeholder="Username">
+                                            <?= form_error('username', '<small class="text-danger pl-3">', '</small>'); ?>
                                         </div>
                                         <div class="mb-3">
                                             <label class="mb-1"><strong>Password</strong></label>
                                             <input type="password" class="form-control" name="password" placeholder="Password">
+                                            <?= form_error('password', '<small class="text-danger pl-3">', '</small>'); ?>
                                         </div>
                                         <div class="row d-flex justify-content-between mt-4 mb-2">
                                             <!-- <div class="mb-3">
