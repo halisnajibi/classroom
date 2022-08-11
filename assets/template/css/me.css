@@ -1,0 +1,15 @@
+img.hc {
+	display: none;
+}
+
+@media (max-width: 900px) {
+	img.hc {
+		display: block;
+		width: 40px;
+		margin-top: -10px;
+	}
+
+	img.logo {
+		display: none;
+	}
+}
