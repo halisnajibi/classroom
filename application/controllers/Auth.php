@@ -96,4 +96,10 @@ Wrong Password!
 			redirect('auth');
 		}
 	}
+	public function logout()
+	{
+		$this->session->unset_userdata['id_user'];
+		$this->session->unset_userdata['level'];
+		redirect('auth');
+	}
 }

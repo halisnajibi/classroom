@@ -15,7 +15,7 @@
                   <div class="card-body tryal row">
                     <div class="col-xl-7 col-sm-6">
                       <h2>Welcome to classroom</h2>
-                      <span><?= $user('nama'); ?></span>
+                      <span><?= $user['nama'] ?></span>
                     </div>
                   </div>
                 </div>

@@ -18,7 +18,7 @@
   <title>Admin Dashboard</title>
 
   <!-- FAVICONS ICON -->
-  <link rel="shortcut icon" type="image/png" href="<?= base_url('assets/user/icon/hc.png') ?>">
+  <link rel="shortcut icon" type="image/png" href="<?= base_url('assets/template/images/hc.png') ?>">
   <link href="<?= base_url('assets/template/') ?>vendor/jquery-nice-select/css/nice-select.css" rel="stylesheet">
   <link href="<?= base_url('assets/template/') ?>vendor/owl-carousel/owl.carousel.css" rel="stylesheet">
   <link rel="stylesheet" href="v<?= base_url('assets/template/') ?>vendor/nouislider/nouislider.min.css">
@@ -53,8 +53,8 @@
         ***********************************-->
     <div class="nav-header">
       <a href="index.html" class="brand-logo">
-        <img src="<?= base_url('assets/user/icon/logo.png') ?>" alt="" width="150" class="logo">
-        <img src="<?= base_url('assets/user/icon/hc.png') ?>" alt="" class="hc">
+        <img src="<?= base_url('assets/template/images/logo.png') ?>" alt="" width="150" class="logo">
+        <img src="<?= base_url('assets/template/images/hc.png') ?>" alt="" class="hc">
       </a>
       <div class="nav-control">
         <div class="hamburger">
@@ -84,14 +84,14 @@
                   <img src="<?= base_url('assets/user/profiel/' . $user['foto']) ?>" width="56" alt="">
                 </a>
                 <div class="dropdown-menu dropdown-menu-end">
-                  <a href="app-profile.html" class="dropdown-item ai-icon">
+                  <a href="<?= base_url('user') ?>" class="dropdown-item ai-icon">
                     <svg id="icon-user1" xmlns="http://www.w3.org/2000/svg" class="text-primary" width="18" height="18" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                       <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                       <circle cx="12" cy="7" r="4"></circle>
                     </svg>
                     <span class="ms-2">Profile </span>
                   </a>
-                  <a href="page-error-404.html" class="dropdown-item ai-icon">
+                  <a href="<?= base_url('auth/logout') ?>" class="dropdown-item ai-icon">
                     <svg id="icon-logout" xmlns="http://www.w3.org/2000/svg" class="text-danger" width="18" height="18" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                       <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
                       <polyline points="16 17 21 12 16 7"></polyline>
@@ -116,7 +116,7 @@
     <div class="dlabnav">
       <div class="dlabnav-scroll">
         <ul class="metismenu" id="menu">
-          <li><a class="" href="">
+          <li><a class="" href="<?= base_url('admin') ?>">
               <i class="fas fa-home"></i>
               <span class="nav-text">Dashboard</span>
             </a>
