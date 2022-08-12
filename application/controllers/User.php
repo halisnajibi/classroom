@@ -24,7 +24,7 @@ class User extends CI_Controller
       $this->load->view('template/footer');
     } else {
       //jika ada file upload
-      $foto = $_FILES['foto']['username'];
+      $foto = $_FILES['foto']['name'];
       if ($foto) {
         $config['upload_path'] = './assets/user/profiel/';
         $config['allowed_types'] = 'jpeg|jpg|png';
@@ -32,10 +32,10 @@ class User extends CI_Controller
         $this->load->library('upload', $config);
         //lakukan upload
         if ($this->upload->do_upload('foto')) {
-          $foto_lama = $data['siswa']['foto'];
-          if ($foto_lama != 'default.png') {
-            unlink(FCPATH . 'assets/user/profiel/' . $foto_lama);
-          }
+          // $foto_lama =   $data['user']['foto'];
+          // if ($foto_lama != 'default.png') {
+          //   unlink(FCPATH . 'assets/user/profiel/' . $foto_lama);
+          // }
           $new_image = $this->upload->data('file_name');
           $this->M_user->update($new_image);
         } else {
@@ -47,6 +47,10 @@ class User extends CI_Controller
       }
       //insert data
       $this->M_user->update();
+      $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">
+Your Profiel Has been update !
+  </div>');
+      redirect('user');
     }
   }
 }

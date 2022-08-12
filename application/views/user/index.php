@@ -40,6 +40,7 @@
             <div class="card-body">
               <div class="profile-tab">
                 <div class="custom-tab-1">
+                  <?= $this->session->flashdata('message') ?>
                   <ul class="nav nav-tabs">
                     <li class="nav-item"><a href="#my-posts" data-bs-toggle="tab" class="nav-link active show">About Me</a>
                     </li>
@@ -143,6 +144,7 @@
 
                                 </div>
                                 </form>
+
                               </div>
                             </div>
                           </div>
