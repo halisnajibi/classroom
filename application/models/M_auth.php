@@ -14,9 +14,9 @@ class M_auth extends CI_Model
   //insert tabel user
   $username = $this->input->post('username');
   $data1 = [
-   'username' => $username,
+   'username' => htmlspecialchars($username, true),
    'password' =>  password_hash($this->input->post('password1'), PASSWORD_DEFAULT),
-   'level' => $this->input->post('level'),
+   'level' => htmlspecialchars($this->input->post('level'), true)
   ];
   $this->db->insert('user', $data1);
   //insert tabel siswa
@@ -42,12 +42,12 @@ class M_auth extends CI_Model
   $npm = $this->input->post('npm');
   $data = [
    'npm' => $npm,
-   'nama' => $this->input->post('nama'),
-   'email' => $this->input->post('email'),
-   'tanggal_lahir' => $this->input->post('tanggal_lahir'),
-   'tempat_lahir' => $this->input->post('tempat_lahir'),
-   'jk' => $this->input->post('jk'),
-   'id_kls' => $this->input->post('kelas'),
+   'nama' => htmlspecialchars($this->input->post('nama', true)),
+   'email' => htmlspecialchars($this->input->post('email', true)),
+   'tanggal_lahir' => htmlspecialchars($this->input->post('tanggal_lahir', true)),
+   'tempat_lahir' => htmlspecialchars($this->input->post('tempat_lahir', true)),
+   'jk' => htmlspecialchars($this->input->post('jk', true)),
+   'id_kls' => htmlspecialchars($this->input->post('kelas', true)),
    'foto' => 'default.png',
    'alamat' => ''
   ];

@@ -26,6 +26,8 @@
   <!-- Style css -->
   <link href="<?= base_url('assets/template/') ?>css/style.css" rel="stylesheet">
   <link href="<?= base_url('assets/template/') ?>css/me.css" rel="stylesheet">
+  <!-- datatable -->
+  <link href="<?= base_url('assets/template/') ?>vendor/datatables/css/jquery.dataTables.min.css" rel="stylesheet">
 </head>
 
 <body>
@@ -52,7 +54,7 @@
             Nav header start
         ***********************************-->
     <div class="nav-header">
-      <a href="index.html" class="brand-logo">
+      <a href="<?= base_url() ?>" class="brand-logo">
         <img src="<?= base_url('assets/template/images/logo.png') ?>" alt="" width="150" class="logo">
         <img src="<?= base_url('assets/template/images/hc.png') ?>" alt="" class="hc">
       </a>
@@ -75,7 +77,13 @@
           <div class="collapse navbar-collapse justify-content-between">
             <div class="header-left">
               <div class="dashboard_bar">
-                Dashboard
+                <?php if ($this->uri->segment(2) == '') {
+                  echo 'Dasboard';
+                } else {
+                  echo ucfirst($this->uri->segment(2));
+                }
+                ?>
+
               </div>
             </div>
             <ul class="navbar-nav header-right">
@@ -84,7 +92,17 @@
                   <img src="<?= base_url('assets/user/profiel/' . $user['foto']) ?>" width="56" alt="">
                 </a>
                 <div class="dropdown-menu dropdown-menu-end">
-                  <a href="<?= base_url('user') ?>" class="dropdown-item ai-icon">
+                  <a href="
+                  <?php
+                  if ($level == 1) {
+                    echo  base_url('admin/profiel');
+                  } else if ($level == 2) {
+                    echo  base_url('siswa/profiel');
+                  } else {
+                    echo  base_url('guru/profiel');
+                  }
+                  ?>
+                  " class="dropdown-item ai-icon">
                     <svg id="icon-user1" xmlns="http://www.w3.org/2000/svg" class="text-primary" width="18" height="18" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                       <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                       <circle cx="12" cy="7" r="4"></circle>
@@ -126,8 +144,8 @@
               <span class="nav-text">Master Data</span>
             </a>
             <ul aria-expanded="false">
-              <li><a href="app-profile.html">Data Student</a></li>
-              <li><a href="post-details.html">Data Class</a></li>
+              <li><a href="<?= base_url('admin/siswa') ?>">Data Student</a></li>
+              <li><a href="<?= base_url('admin/class') ?>">Data Class</a></li>
 
             </ul>
           </li>

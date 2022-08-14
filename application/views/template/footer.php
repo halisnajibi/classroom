@@ -47,6 +47,10 @@
 <script src="<?= base_url('assets/template/') ?>js/custom.min.js"></script>
 <script src="<?= base_url('assets/template/') ?>js/dlabnav-init.js"></script>
 <script src="<?= base_url('assets/template/') ?>js/demo.js"></script>
+<script src="<?= base_url('assets/template/') ?>vendor/datatables/js/jquery.dataTables.min.js"></script>
+<script src="<?= base_url('assets/template/') ?>js/plugins-init/datatables.init.js"></script>
+
+<script src="<?= base_url('assets/template/') ?>vendor/jquery-nice-select/js/jquery.nice-select.min.js"></script>
 <script>
     function cardsCenter() {
 
