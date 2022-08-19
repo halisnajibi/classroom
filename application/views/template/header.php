@@ -148,7 +148,7 @@
             </a>
             <ul aria-expanded="false">
               <li><a href="<?= base_url('admin/siswa') ?>">Data Student</a></li>
-              <li><a href="<?= base_url('admin/class') ?>">Data Class</a></li>
+              <li><a href="<?= base_url('admin/kelas') ?>">Data Class</a></li>
 
             </ul>
           </li>

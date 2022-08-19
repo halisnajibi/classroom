@@ -108,4 +108,18 @@ class M_admin extends CI_Model
   $this->db->where('id_user', $id);
   $this->db->update('tbl_siswa', $data);
  }
+
+ public function addKelas()
+ {
+  $data = [
+   'kelas' => $this->input->post('kelas')
+  ];
+  $this->db->insert('tbl_kelas', $data);
+ }
+
+ public function deleteKelas($id)
+ {
+  $this->db->where('id_kelas', $id);
+  $this->db->delete('tbl_kelas');
+ }
 }

@@ -199,4 +199,60 @@ Wrong current password !
       redirect('admin/siswa');
     }
   }
+
+  public function kelas()
+  {
+    $this->form_validation->set_rules('kelas', 'Kelas', 'required|trim');
+    if ($this->form_validation->run() == false) {
+      $session_user = $this->session->userdata('id_user');
+      $session_level = $this->session->userdata('level');
+      $data['user'] = $this->M_admin->getAll($session_user);
+      $data['level'] = $session_level;
+      $data['kelas'] = $this->M_kelas->getAllClass();
+      $this->load->view('template/header', $data);
+      $this->load->view('admin/kelas/kelas-view', $data);
+      $this->load->view('template/footer');
+    } else {
+      $this->M_admin->addKelas();
+      $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">
+  class add !!
+        </div>');
+      redirect('admin/kelas');
+    }
+  }
+
+  public function kelasUpdate($id)
+  {
+    $this->form_validation->set_rules('kelas', 'Kelas', 'required|trim');
+    if ($this->form_validation->run() == false) {
+      $session_user = $this->session->userdata('id_user');
+      $session_level = $this->session->userdata('level');
+      $data['user'] = $this->M_admin->getAll($session_user);
+      $data['level'] = $session_level;
+      $data['kelas'] = $this->M_kelas->getAllClass();
+      $this->load->view('template/header', $data);
+      $this->load->view('admin/kelas/kelas-view', $data);
+      $this->load->view('template/footer');
+    } else {
+      $data = [
+        'kelas' => $this->input->post('kelas')
+      ];
+      $this->db->where('id_kelas', $id);
+      $this->db->update('tbl_kelas', $data);
+
+      $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">
+  class updated !!
+        </div>');
+      redirect('admin/kelas');
+    }
+  }
+
+  public function kelasDelete($id)
+  {
+    $this->M_admin->deleteKelas($id);
+    $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">
+  class deleted !!
+        </div>');
+    redirect('admin/kelas');
+  }
 }

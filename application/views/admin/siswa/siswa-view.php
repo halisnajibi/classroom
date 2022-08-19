@@ -15,11 +15,9 @@
             <div class="card-header">
               <h4 class="card-title">Data Student</h4>
               <a href="siswaAdd" class="btn btn-primary">Add Student</a>
-
             </div>
             <div class="card-body">
               <?= $this->session->flashdata('message') ?>
-
               <div class="table-responsive">
                 <table id="example3" class="display" style="min-width: 845px">
                   <thead>
