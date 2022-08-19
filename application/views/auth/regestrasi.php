@@ -80,7 +80,7 @@
 
          </form>
          <div class="new-account mt-3">
-          <button type="submit" class="btn btn-secondary btn-block">Log In</button>
+          <a href="<?= base_url('auth') ?>" class="btn btn-secondary btn-block">Log In</a>
          </div>
         </div>
        </div>

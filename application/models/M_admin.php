@@ -46,4 +46,66 @@ class M_admin extends CI_Model
  {
   return $this->db->get('tbl_siswa')->result_array();
  }
+
+ public function getSswById($id)
+ {
+  return $this->db->get_where('tbl_siswa', ['id_user' => $id])->row_array();
+ }
+
+ public function insertSiswa()
+ {
+  $npm = $this->input->post('npm', true);
+  $data1 = [
+   'username' => htmlspecialchars($npm),
+   'password' => password_hash($this->input->post('npm', true), PASSWORD_DEFAULT),
+   'level' => 2
+  ];
+  //bikin akun untuk siswa
+  $this->db->insert('user', $data1);
+  //ambil data id_user berdasarkan username
+  $query_id = $this->db->get_where('user', ['username' => $npm])->row_array();
+  $id_user = $query_id['id_user'];
+  //inset tabel siswa
+  $data2 = [
+   'npm' => htmlspecialchars($npm),
+   'nama' => htmlspecialchars($this->input->post('nama', true)),
+   'email'  => htmlspecialchars($this->input->post('email', true)),
+   'tanggal_lahir'  => htmlspecialchars($this->input->post('tanggal_lahir', true)),
+   'tempat_lahir'  => htmlspecialchars($this->input->post('tempat_lahir', true)),
+   'jk'  => htmlspecialchars($this->input->post('jk', true)),
+   'id_kls'  => htmlspecialchars($this->input->post('kelas', true)),
+   'foto' => 'default.png',
+   'alamat'  => htmlspecialchars($this->input->post('alamat', true)),
+   'id_user'  => $id_user,
+  ];
+  $this->db->insert('tbl_siswa', $data2);
+ }
+
+
+ public function deleteSiswa($id)
+ {
+  $this->db->delete('tbl_siswa', ['id_user' => $id]);
+  $this->db->delete('user', ['id_user' => $id]);
+ }
+
+
+ public function updateSiswa()
+ {
+  $id = $this->input->post('id_user');
+  $data = [
+   'id_siswa' => $this->input->post('id_siswa'),
+   'npm' => $this->input->post('npm'),
+   'nama' => $this->input->post('nama'),
+   'email' => $this->input->post('email'),
+   'tanggal_lahir' => $this->input->post('tanggal_lahir'),
+   'tempat_lahir' => $this->input->post('tempat_lahir'),
+   'jk' =>  $this->input->post('jk'),
+   'id_kls' => $this->input->post('kelas'),
+   'foto ' => $this->input->post('fotosiswa'),
+   'alamat' => $this->input->post('alamat'),
+   'id_user' => $id
+  ];
+  $this->db->where('id_user', $id);
+  $this->db->update('tbl_siswa', $data);
+ }
 }

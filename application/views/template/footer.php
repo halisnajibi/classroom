@@ -1,34 +1,14 @@
-<!--**********************************
-            Footer start
-        ***********************************-->
 <div class="footer">
     <div class="copyright">
         <p>Copyright © Designed &amp; Developed by <a href="https://www.instagram.com/bihaliz/" target="_blank">Haliz Najibi</a> <?= date('Y') ?></p>
     </div>
 </div>
-<!--**********************************
-            Footer end
-        ***********************************-->
-
-<!--**********************************
-           Support ticket button start
-        ***********************************-->
-
-<!--**********************************
-           Support ticket button end
-        ***********************************-->
-
-
 </div>
-<!--**********************************
-        Main wrapper end
-    ***********************************-->
-
-<!--**********************************
-        Scripts
-    ***********************************-->
 <!-- Required vendors -->
 <script src="<?= base_url('assets/template/') ?>vendor/global/global.min.js"></script>
+<script src="<?= base_url('assets/template/') ?>vendor/sweetalert2/dist/sweetalert2.min.js"></script>
+<script src="<?= base_url('assets/template/') ?>js/plugins-init/sweetalert.init.js"></script>
+
 <script src="<?= base_url('assets/template/') ?>vendor/chart.js/Chart.bundle.min.js"></script>
 <script src="<?= base_url('assets/template/') ?>vendor/jquery-nice-select/js/jquery.nice-select.min.js"></script>
 
@@ -51,6 +31,8 @@
 <script src="<?= base_url('assets/template/') ?>js/plugins-init/datatables.init.js"></script>
 
 <script src="<?= base_url('assets/template/') ?>vendor/jquery-nice-select/js/jquery.nice-select.min.js"></script>
+<script src="<?= base_url('assets/template/') ?>vendor/sweetalert2/dist/sweetalert2.min.js"></script>
+<script src="<?= base_url('assets/template/') ?>vendor/js/me.js"></script>
 <script>
     function cardsCenter() {
 

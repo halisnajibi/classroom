@@ -8,6 +8,9 @@ class Admin extends CI_Controller
     parent::__construct();
     cek_login();
   }
+
+
+
   public function index()
   {
     $session_user = $this->session->userdata('id_user');
@@ -130,11 +133,70 @@ Wrong current password !
   {
     $session_user = $this->session->userdata('id_user');
     $session_level = $this->session->userdata('level');
-    $data['user'] = $this->M_admin->getAll($session_user);
     $data['level'] = $session_level;
+    $data['user'] = $this->M_admin->getAll($session_user);
     $data['siswa'] = $this->M_admin->getAllSiswa();
     $this->load->view('template/header', $data);
-    $this->load->view('admin/siswa-view', $data);
+    $this->load->view('admin/siswa/siswa-view', $data);
     $this->load->view('template/footer');
+  }
+
+  public function siswaAdd()
+  {
+    $session_user = $this->session->userdata('id_user');
+    $session_level = $this->session->userdata('level');
+    $data['level'] = $session_level;
+    $data['user'] = $this->M_admin->getAll($session_user);
+    $data['kelas'] = $this->M_kelas->getAllClass();
+    $this->form_validation->set_rules('nama', 'Nama', 'required|trim');
+    $this->form_validation->set_rules('npm', 'Nomor Pokok Mahasiswa', 'required|trim');
+    $this->form_validation->set_rules('email', 'Email', 'valid_email|trim');
+    $data['siswa'] = $this->M_admin->getAllSiswa();
+    if ($this->form_validation->run() == false) {
+      $this->load->view('template/header', $data);
+      $this->load->view('admin/siswa/siswa-add', $data);
+      $this->load->view('template/footer');
+    } else {
+      //berhasil validasi
+      $this->M_admin->insertSiswa();
+      $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">
+    New student added !!
+        </div>');
+      redirect('admin/siswa');
+    }
+  }
+
+  public function siswaDelete($id)
+  {
+    $this->M_admin->deleteSiswa($id);
+    $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">
+     student delete !!
+        </div>');
+    redirect('admin/siswa');
+  }
+
+  public function siswaUpdate($id)
+  {
+
+    $this->form_validation->set_rules('nama', 'Nama', 'required|trim');
+    $this->form_validation->set_rules('npm', 'Nomor Pokok Mahasiswa', 'required|trim');
+    $this->form_validation->set_rules('email', 'Email', 'valid_email|trim');
+    if ($this->form_validation->run() == false) {
+      $session_user = $this->session->userdata('id_user');
+      $session_level = $this->session->userdata('level');
+      $data['user'] = $this->M_admin->getAll($session_user);
+      $data['level'] = $session_level;
+      $data['siswa']  = $this->M_admin->getSswById($id);
+      $data['kelas'] = $this->M_kelas->getAllClass();
+      $this->load->view('template/header', $data);
+      $this->load->view('admin/siswa/siswa-update', $data);
+      $this->load->view('template/footer');
+    } else {
+      $this->M_admin->updateSiswa();
+      $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">
+     student update  !!
+        </div>');
+      redirect('admin/siswa');
+    }
   }
 }

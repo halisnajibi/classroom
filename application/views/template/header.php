@@ -28,6 +28,9 @@
   <link href="<?= base_url('assets/template/') ?>css/me.css" rel="stylesheet">
   <!-- datatable -->
   <link href="<?= base_url('assets/template/') ?>vendor/datatables/css/jquery.dataTables.min.css" rel="stylesheet">
+  <!-- sweatalert -->
+  <link href="<?= base_url('assets/template/') ?>vendor/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet">
+  <link href="<?= base_url('assets/template/') ?>vendor/jquery-nice-select/css/nice-select.css" rel="stylesheet">
 </head>
 
 <body>
