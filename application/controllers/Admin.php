@@ -9,6 +9,8 @@ class Admin extends CI_Controller
     cek_login();
   }
 
+
+
   // ADMIN
 
   public function index()
@@ -377,5 +379,62 @@ Wrong current password !
   {
     $this->load->helper('download');
     force_download("assets/user/materi/$nama", NULL);
+  }
+
+
+  // ABSEN
+  public function absen()
+  {
+    $this->form_validation->set_rules('kelas', 'Kelas', 'required|trim');
+    if ($this->form_validation->run() == false) {
+      $session_user = $this->session->userdata('id_user');
+      $session_level = $this->session->userdata('level');
+      $data['user'] = $this->M_admin->getAll($session_user);
+      $data['level'] = $session_level;
+      $data['kelas'] = $this->M_kelas->getAllClass();
+      $data['absen'] = $this->M_absen->getAllAbsen();
+      $this->load->view('template/header', $data);
+      $this->load->view('admin/absen/absen-view', $data);
+      $this->load->view('template/footer');
+    } else {
+      $this->M_admin->insertAbsen();
+      $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">
+       absen add!
+          </div>');
+      redirect('admin/absen/absen-view');
+    }
+  }
+
+  public function updateAbsen()
+  {
+
+    $this->form_validation->set_rules('kelas', 'Kelas', 'required|trim');
+    if ($this->form_validation->run() == false) {
+      $session_user = $this->session->userdata('id_user');
+      $session_level = $this->session->userdata('level');
+      $data['user'] = $this->M_admin->getAll($session_user);
+      $data['level'] = $session_level;
+      $data['kelas'] = $this->M_kelas->getAllClass();
+      $data['absen'] = $this->M_absen->getAllAbsen();
+      $this->load->view('template/header', $data);
+      $this->load->view('admin/absen/absen-view', $data);
+      $this->load->view('template/footer');
+    } else {
+      $this->M_admin->updateAbsen();
+      $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">
+       absen update!
+          </div>');
+      redirect('admin/absen/absen-view');
+    }
+  }
+
+  public function absenDelete($id)
+  {
+    $this->db->where('id_buku_absen', $id);
+    $this->db->delete('tbl_buku_absen');
+    $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">
+       absen deletd!
+          </div>');
+    redirect('admin/absen/absen-view');
   }
 }

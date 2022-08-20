@@ -167,4 +167,30 @@ class M_admin extends CI_Model
    $this->db->update('tbl_materi', $data);
   }
  }
+
+ // ASBEN
+ public function insertAbsen()
+ {
+  $data = [
+   'tanggal' => $this->input->post('tanggal'),
+   'jam_mulai' => $this->input->post('mulai'),
+   'jam_akhir' => $this->input->post('akhir'),
+   'id_kls' => $this->input->post('kelas')
+  ];
+
+  $this->db->insert('tbl_buku_absen', $data);
+ }
+
+ public function updateAbsen()
+ {
+  $id = $this->input->post('id');
+  $data = [
+   'tanggal' => $this->input->post('tanggal'),
+   'jam_mulai' => $this->input->post('mulai'),
+   'jam_akhir' => $this->input->post('akhir'),
+   'id_kls' => $this->input->post('kelas')
+  ];
+  $this->db->where('id_buku_absen', $id);
+  $this->db->update('tbl_buku_absen', $data);
+ }
 }
