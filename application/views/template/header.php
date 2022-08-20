@@ -15,7 +15,7 @@
   <meta name="format-detection" content="telephone=no">
 
   <!-- PAGE TITLE HERE -->
-  <title>Admin Dashboard</title>
+  <title>Classroom</title>
 
   <!-- FAVICONS ICON -->
   <link rel="shortcut icon" type="image/png" href="<?= base_url('assets/template/images/hc.png') ?>">
@@ -34,6 +34,8 @@
 
   <!-- summernote -->
   <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+  <!-- fontawesome -->
+  <link rel="stylesheet" href="<?= base_url('assets/template/') ?>vendor/fontawesome/css/all.min.css">
 </head>
 
 <body>
@@ -140,59 +142,124 @@
     <div class="dlabnav">
       <div class="dlabnav-scroll">
         <ul class="metismenu" id="menu">
-          <li><a class="" href="<?= base_url('admin') ?>">
-              <i class="fas fa-home"></i>
-              <span class="nav-text">Dashboard</span>
-            </a>
-          </li>
-          <li><a class="has-arrow " href="javascript:void()" aria-expanded="false">
-              <i class="fas fa-clone"></i>
-              <span class="nav-text">Master Data</span>
-            </a>
-            <ul aria-expanded="false">
-              <li><a href="<?= base_url('admin/siswa') ?>">Data Student</a></li>
-              <li><a href="<?= base_url('admin/kelas') ?>">Data Class</a></li>
+          <?php if ($level == 1) : ?>
+            <li>
+              <a class="" href="<?= base_url('admin') ?>">
+                <i class="fas fa-home"></i>
+                <span class="nav-text">Dashboard</span>
+              </a>
+            </li>
+          <?php elseif ($level == 2) : ?>
+            <li>
+              <a class="" href="<?= base_url('siswa') ?>">
+                <i class="fas fa-home"></i>
+                <span class="nav-text">Dashboard</span>
+              </a>
+            </li>
+          <?php else : ?>
+            <li>
+              <a class="" href="<?= base_url('guru') ?>">
+                <i class="fas fa-home"></i>
+                <span class="nav-text">Dashboard</span>
+              </a>
+            </li>
+          <?php endif; ?>
 
-            </ul>
+          <li>
+            <?php if ($level == 1) : ?>
+              <a class="has-arrow " href="javascript:void()" aria-expanded="false">
+                <i class="fas fa-clone"></i>
+                <span class="nav-text">Master Data</span>
+              </a>
+              <ul aria-expanded="false">
+                <li><a href="<?= base_url('admin/siswa') ?>">Data Student</a></li>
+                <li><a href="<?= base_url('admin/kelas') ?>">Data Class</a></li>
+              </ul>
+            <?php elseif ($level == 2) : ?>
+              <a href="widget-basic.html" class="" aria-expanded="false">
+                <i class="fa-solid fa-book"></i>
+                <span class="nav-text">Materi</span>
+              </a>
+            <?php else : ?>
+              <a class="has-arrow " href="javascript:void()" aria-expanded="false">
+                <i class="fas fa-clone"></i>
+                <span class="nav-text">guru</span>
+              </a>
+            <?php endif; ?>
           </li>
-          <li><a class="has-arrow " href="javascript:void()" aria-expanded="false">
+          <li>
+            <?php if ($level == 1) : ?>
+              <a class="has-arrow " href="javascript:void()" aria-expanded="false">
+                <i class="fas fa-table"></i>
+                <span class="nav-text">Learning</span>
+              </a>
+              <ul aria-expanded="false">
+                <li><a href="<?= base_url('admin/teori') ?>">Theory</a></li>
+                <li><a href="<?= base_url('admin/absen') ?>">Presence</a></li>
+              </ul>
+            <?php elseif ($level == 2) : ?>
+              <a href="widget-basic.html" class="" aria-expanded="false">
+                <i class="fa-solid fa-fingerprint"></i>
+                <span class="nav-text">Absen</span>
+              </a>
+            <?php else : ?>
+              <a class="has-arrow " href="javascript:void()" aria-expanded="false">
+                <i class="fas fa-clone"></i>
+                <span class="nav-text">guru</span>
+              </a>
+            <?php endif; ?>
+          </li>
 
-              <i class="fas fa-table"></i>
-              <span class="nav-text">Learning</span>
-            </a>
-            <ul aria-expanded="false">
-              <li><a href="<?= base_url('admin/teori') ?>">Theory</a></li>
-              <li><a href="<?= base_url('admin/absen') ?>">Presence</a></li>
-            </ul>
+          <?php if ($level == 2) : ?>
+            <li>
+              <a href="widget-basic.html" class="" aria-expanded="false">
+                <i class="fa-solid fa-file-pen"></i>
+                <span class="nav-text">Tugas</span>
+              </a>
+            </li>
+          <?php endif; ?>
+          <li>
+            <?php if ($level == 1) : ?>
+              <a class="has-arrow " href="javascript:void()" aria-expanded="false">
+                <i class="fas fa-file-alt"></i>
+                <span class="nav-text">Report</span>
+              </a>
+              <ul aria-expanded="false">
+                <li><a href="app-calender.html">Student</a></li>
+                <li><a href="app-profile.html">Theory</a></li>
+                <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">Presence</a>
+                  <ul aria-expanded="false">
+                    <li><a href="email-compose.html">Compose</a></li>
+                    <li><a href="email-inbox.html">Inbox</a></li>
+                    <li><a href="email-read.html">Read</a></li>
+                  </ul>
+                </li>
+                <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">Class</a>
+                  <ul aria-expanded="false">
+                    <li><a href="ecom-product-grid.html">Product Grid</a></li>
+                    <li><a href="ecom-product-list.html">Product List</a></li>
+                    <li><a href="ecom-product-detail.html">Product Details</a></li>
+                    <li><a href="ecom-product-order.html">Order</a></li>
+                    <li><a href="ecom-checkout.html">Checkout</a></li>
+                    <li><a href="ecom-invoice.html">Invoice</a></li>
+                    <li><a href="ecom-customers.html">Customers</a></li>
+                  </ul>
+                </li>
+              </ul>
+            <?php elseif ($level == 2) : ?>
+              <a href="widget-basic.html" class="" aria-expanded="false">
+                <i class="fas fa-user-check"></i>
+                <span class="nav-text">Hubungi Dosen</span>
+              </a>
+            <?php else : ?>
+              <a class="has-arrow " href="javascript:void()" aria-expanded="false">
+                <i class="fas fa-clone"></i>
+                <span class="nav-text">Guru</span>
+              </a>
+            <?php endif; ?>
+
           </li>
 
-          <li><a class="has-arrow " href="javascript:void()" aria-expanded="false">
-              <i class="fas fa-file-alt"></i>
-              <span class="nav-text">Report</span>
-            </a>
-            <ul aria-expanded="false">
-              <li><a href="app-calender.html">Student</a></li>
-              <li><a href="app-profile.html">Theory</a></li>
-              <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">Presence</a>
-                <ul aria-expanded="false">
-                  <li><a href="email-compose.html">Compose</a></li>
-                  <li><a href="email-inbox.html">Inbox</a></li>
-                  <li><a href="email-read.html">Read</a></li>
-                </ul>
-              </li>
-              <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">Class</a>
-                <ul aria-expanded="false">
-                  <li><a href="ecom-product-grid.html">Product Grid</a></li>
-                  <li><a href="ecom-product-list.html">Product List</a></li>
-                  <li><a href="ecom-product-detail.html">Product Details</a></li>
-                  <li><a href="ecom-product-order.html">Order</a></li>
-                  <li><a href="ecom-checkout.html">Checkout</a></li>
-                  <li><a href="ecom-invoice.html">Invoice</a></li>
-                  <li><a href="ecom-customers.html">Customers</a></li>
-                </ul>
-              </li>
-            </ul>
-          </li>
         </ul>
       </div>
     </div>
