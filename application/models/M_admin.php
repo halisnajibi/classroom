@@ -122,4 +122,49 @@ class M_admin extends CI_Model
   $this->db->where('id_kelas', $id);
   $this->db->delete('tbl_kelas');
  }
+
+ public function insertMateri($file = null)
+ {
+  if ($file != null) {
+   $data1 = [
+    'judul' => $this->input->post('judul'),
+    'isi' => $this->input->post('isi'),
+    'file' => $file,
+    'id_kelas' => $this->input->post('kelas')
+   ];
+   $this->db->insert('tbl_materi', $data1);
+  } else {
+   $data = [
+    'judul' => $this->input->post('judul'),
+    'isi' => $this->input->post('isi'),
+    'file' => 'tidak ada file',
+    'id_kelas' => $this->input->post('kelas')
+   ];
+   $this->db->insert('tbl_materi', $data);
+  }
+ }
+
+ public function updateMateri($file = null)
+ {
+  $id = $this->input->post('id_materi');
+  if ($file != null) {
+   $data1 = [
+    'judul' => $this->input->post('judul'),
+    'isi' => $this->input->post('isi'),
+    'file' => $file,
+    'id_kelas' => $this->input->post('kelas')
+   ];
+   $this->db->where('id_materi', $id);
+   $this->db->update('tbl_materi', $data1);
+  } else {
+   $data = [
+    'judul' => $this->input->post('judul'),
+    'isi' => $this->input->post('isi'),
+    'file' => $this->input->post('file_materi'),
+    'id_kelas' => $this->input->post('kelas')
+   ];
+   $this->db->where('id_materi', $id);
+   $this->db->update('tbl_materi', $data);
+  }
+ }
 }

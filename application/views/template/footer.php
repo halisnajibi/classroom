@@ -12,16 +12,6 @@
 <script src="<?= base_url('assets/template/') ?>vendor/chart.js/Chart.bundle.min.js"></script>
 <script src="<?= base_url('assets/template/') ?>vendor/jquery-nice-select/js/jquery.nice-select.min.js"></script>
 
-<!-- Apex Chart -->
-<script src="<?= base_url('assets/template/') ?>vendor/apexchart/apexchart.js"></script>
-
-<script src="<?= base_url('assets/template/') ?>vendor/chart.js/Chart.bundle.min.js"></script>
-
-<!-- Chart piety plugin files -->
-<script src="<?= base_url('assets/template/') ?>vendor/peity/jquery.peity.min.js"></script>
-<!-- Dashboard 1 -->
-<script src="<?= base_url('assets/template/') ?>js/dashboard/dashboard-1.js"></script>
-
 <script src="<?= base_url('assets/template/') ?>vendor/owl-carousel/owl.carousel.js"></script>
 
 <script src="<?= base_url('assets/template/') ?>js/custom.min.js"></script>
@@ -33,6 +23,21 @@
 <script src="<?= base_url('assets/template/') ?>vendor/jquery-nice-select/js/jquery.nice-select.min.js"></script>
 <script src="<?= base_url('assets/template/') ?>vendor/sweetalert2/dist/sweetalert2.min.js"></script>
 <script src="<?= base_url('assets/template/') ?>vendor/js/me.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+<script>
+    $('#summernote').summernote({
+        placeholder: 'Silahkan Ketik Materi',
+        tabsize: 2,
+        height: 120,
+        toolbar: [
+            ['font', ['bold', 'underline', 'clear', 'italic']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['insert', ['link', ]],
+
+        ]
+    });
+</script>
 <script>
     function cardsCenter() {
 

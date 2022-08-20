@@ -31,6 +31,9 @@
   <!-- sweatalert -->
   <link href="<?= base_url('assets/template/') ?>vendor/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet">
   <link href="<?= base_url('assets/template/') ?>vendor/jquery-nice-select/css/nice-select.css" rel="stylesheet">
+
+  <!-- summernote -->
+  <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
 </head>
 
 <body>
@@ -158,8 +161,8 @@
               <span class="nav-text">Learning</span>
             </a>
             <ul aria-expanded="false">
-              <li><a href="form-element.html">Theory</a></li>
-              <li><a href="form-wizard.html">Presence</a></li>
+              <li><a href="<?= base_url('admin/teori') ?>">Theory</a></li>
+              <li><a href="<?= base_url('admin/absen') ?>">Presence</a></li>
             </ul>
           </li>
 

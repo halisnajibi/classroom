@@ -9,7 +9,7 @@ class Admin extends CI_Controller
     cek_login();
   }
 
-
+  // ADMIN
 
   public function index()
   {
@@ -21,19 +21,6 @@ class Admin extends CI_Controller
     $this->load->view('admin/index', $data);
     $this->load->view('template/footer');
   }
-
-  // public function profiel()
-  // {
-  //  $session_user = $this->session->userdata('id_user');
-  //  $session_level = $this->session->userdata('level');
-  //  $data['user'] = $this->M_admin->getAll($session_user);
-  //  $data['level'] = $session_level;
-  //  $this->load->view('template/header', $data);
-  //  $this->load->view('admin/profiel', $data);
-  //  $this->load->view('template/footer');
-  // }
-
-
 
   public function profiel()
   {
@@ -128,6 +115,8 @@ Wrong current password !
       }
     }
   }
+
+  // SISWA
 
   public function siswa()
   {
@@ -254,5 +243,139 @@ Wrong current password !
   class deleted !!
         </div>');
     redirect('admin/kelas');
+  }
+
+
+
+  // DATA TEORI ATAU MATERI AJAR
+  public function teori()
+  {
+    $session_user = $this->session->userdata('id_user');
+    $session_level = $this->session->userdata('level');
+    $data['user'] = $this->M_admin->getAll($session_user);
+    $data['level'] = $session_level;
+    $data['materi'] = $this->M_materi->getAllMateri();
+    $this->load->view('template/header', $data);
+    $this->load->view('admin/teori/teori-view', $data);
+    $this->load->view('template/footer');
+  }
+
+  public function materiAdd()
+  {
+    $this->form_validation->set_rules('kelas', 'Kelas', 'required|trim');
+    if ($this->form_validation->run() == false) {
+      $session_user = $this->session->userdata('id_user');
+      $session_level = $this->session->userdata('level');
+      $data['user'] = $this->M_admin->getAll($session_user);
+      $data['level'] = $session_level;
+      $data['kelas'] = $this->M_kelas->getAllClass();
+      $this->load->view('template/header', $data);
+      $this->load->view('admin/teori/teori-add', $data);
+      $this->load->view('template/footer');
+    } else {
+      //jika ada file upload
+      $file = $_FILES['file']['name'];
+      if ($file) {
+        $config['upload_path'] = './assets/user/materi/';
+        $config['allowed_types'] = 'pdf|ppt|pptx|docx';
+        $config['max_size']     = '5000';
+        $this->load->library('upload', $config);
+        //lakukan upload
+        if ($this->upload->do_upload('file')) {
+          $new_file = $this->upload->data('file_name');
+          $this->M_admin->insertMateri($new_file);
+          $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">
+       materi add!
+          </div>');
+          redirect('admin/teori/teori-view');
+        } else {
+          $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
+          ' . $this->upload->display_errors()  . '
+            </div>');
+          redirect('admin/teori/teori-add');
+        }
+      } else {
+        //  pilih tidak ada yg di upload
+        $this->M_admin->insertMateri();
+        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">
+       materi add!
+          </div>');
+        redirect('admin/teori/teori-view');
+      }
+    }
+  }
+
+  public function materiDelete($id)
+  {
+    $query = $this->db->get_where('tbl_materi', ['id_materi' => $id])->row_array();
+    $file = $query['file'];
+    $this->db->where('id_materi', $id);
+    $this->db->delete('tbl_materi');
+    unlink(FCPATH . 'assets/user/materi/' . $file);
+    $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
+       materi deleted!
+          </div>');
+    redirect('admin/teori/teori-view');
+  }
+
+  public function materiUpdate($id)
+  {
+    $this->form_validation->set_rules('judul', 'Judul', 'required|trim');
+    if ($this->form_validation->run() == false) {
+      $session_user = $this->session->userdata('id_user');
+      $session_level = $this->session->userdata('level');
+      $data['user'] = $this->M_admin->getAll($session_user);
+      $data['level'] = $session_level;
+      $data['kelas'] = $this->M_kelas->getAllClass();
+      $data['materi'] =  $this->M_materi->getMateriById($id);
+      $this->load->view('template/header', $data);
+      $this->load->view('admin/teori/teori-update', $data);
+      $this->load->view('template/footer');
+    } else {
+      //berhasil validasi
+
+      //cek jika ada file upload
+      $file = $_FILES['file']['name'];
+      if ($file) {
+        $config['upload_path'] = './assets/user/materi/';
+        $config['allowed_types'] = 'pdf|ppt|pptx|docx|xlsx';
+        $config['max_size']     = '5000';
+        $this->load->library('upload', $config);
+        //lakukan upload
+        if ($this->upload->do_upload('file')) {
+          $session_user = $this->session->userdata('id_user');
+          $session_level = $this->session->userdata('level');
+          $data['user'] = $this->M_admin->getAll($session_user);
+          $data['level'] = $session_level;
+          $data['materi'] =  $this->M_materi->getMateriById($id);
+          $file_lama  = $data['materi']['file'];
+          unlink(FCPATH . 'assets/user/materi/' . $file_lama);
+          $new_file = $this->upload->data('file_name');
+          $this->M_admin->updateMateri($new_file);
+          $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">
+       materi updated!
+          </div>');
+          redirect('admin/teori/teori-view');
+        } else {
+          $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
+          ' . $this->upload->display_errors()  . '
+            </div>');
+          redirect('admin/teori/teori-update');
+        }
+      } else {
+        //  pilih tidak ada yg di upload
+        $this->M_admin->updateMateri();
+        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">
+       materi update!
+          </div>');
+        redirect('admin/teori/teori-view');
+      }
+    }
+  }
+
+  public function materi_download($nama)
+  {
+    $this->load->helper('download');
+    force_download("assets/user/materi/$nama", NULL);
   }
 }
