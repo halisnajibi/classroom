@@ -6,3 +6,7 @@ if (flashdata == true) {
 		type: "success",
 	});
 }
+
+$({
+
+})

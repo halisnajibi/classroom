@@ -130,7 +130,8 @@ class M_admin extends CI_Model
     'judul' => $this->input->post('judul'),
     'isi' => $this->input->post('isi'),
     'file' => $file,
-    'id_kelas' => $this->input->post('kelas')
+    'id_kelas' => $this->input->post('kelas'),
+    'id_user' => $this->input->post('id_user')
    ];
    $this->db->insert('tbl_materi', $data1);
   } else {
@@ -138,7 +139,8 @@ class M_admin extends CI_Model
     'judul' => $this->input->post('judul'),
     'isi' => $this->input->post('isi'),
     'file' => 'tidak ada file',
-    'id_kelas' => $this->input->post('kelas')
+    'id_kelas' => $this->input->post('kelas'),
+    'id_user' => $this->input->post('id_user')
    ];
    $this->db->insert('tbl_materi', $data);
   }
@@ -152,7 +154,7 @@ class M_admin extends CI_Model
     'judul' => $this->input->post('judul'),
     'isi' => $this->input->post('isi'),
     'file' => $file,
-    'id_kelas' => $this->input->post('kelas')
+    'id_kelas' => $this->input->post('kelas'),
    ];
    $this->db->where('id_materi', $id);
    $this->db->update('tbl_materi', $data1);
@@ -171,11 +173,19 @@ class M_admin extends CI_Model
  // ASBEN
  public function insertAbsen()
  {
+  $id_kls = $this->input->post('kelas');
+  $query = $this->db->query("SELECT * FROM tbl_materi WHERE id_kelas = $id_kls ORDER BY id_materi DESC LIMIT 1");
+  $ambil = $query->row_array();
+  $id_materi = $ambil['id_materi'];
+
+
   $data = [
    'tanggal' => $this->input->post('tanggal'),
    'jam_mulai' => $this->input->post('mulai'),
    'jam_akhir' => $this->input->post('akhir'),
-   'id_kls' => $this->input->post('kelas')
+   'jam_toleransi' => $this->input->post('toleransi'),
+   'id_kls' => $id_kls,
+   'id_materi' => $id_materi
   ];
 
   $this->db->insert('tbl_buku_absen', $data);
@@ -188,6 +198,7 @@ class M_admin extends CI_Model
    'tanggal' => $this->input->post('tanggal'),
    'jam_mulai' => $this->input->post('mulai'),
    'jam_akhir' => $this->input->post('akhir'),
+   'jam_toleransi' => $this->input->post('toleransi'),
    'id_kls' => $this->input->post('kelas')
   ];
   $this->db->where('id_buku_absen', $id);

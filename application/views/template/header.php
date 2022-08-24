@@ -176,7 +176,7 @@
                 <li><a href="<?= base_url('admin/kelas') ?>">Data Class</a></li>
               </ul>
             <?php elseif ($level == 2) : ?>
-              <a href="widget-basic.html" class="" aria-expanded="false">
+              <a href="<?= base_url('siswa/materi') ?>" class="" aria-expanded="false">
                 <i class="fa-solid fa-book"></i>
                 <span class="nav-text">Materi</span>
               </a>
@@ -198,7 +198,7 @@
                 <li><a href="<?= base_url('admin/absen') ?>">Presence</a></li>
               </ul>
             <?php elseif ($level == 2) : ?>
-              <a href="widget-basic.html" class="" aria-expanded="false">
+              <a href="<?= base_url('siswa/absen') ?>" class="" aria-expanded="false">
                 <i class="fa-solid fa-fingerprint"></i>
                 <span class="nav-text">Absen</span>
               </a>
@@ -212,7 +212,7 @@
 
           <?php if ($level == 2) : ?>
             <li>
-              <a href="widget-basic.html" class="" aria-expanded="false">
+              <a href="<?= base_url('siswa/tugas') ?>" class="" aria-expanded="false">
                 <i class="fa-solid fa-file-pen"></i>
                 <span class="nav-text">Tugas</span>
               </a>
@@ -247,7 +247,7 @@
                 </li>
               </ul>
             <?php elseif ($level == 2) : ?>
-              <a href="widget-basic.html" class="" aria-expanded="false">
+              <a href="<?= base_url('siswa/hubDosen') ?>" class="" aria-expanded="false">
                 <i class="fas fa-user-check"></i>
                 <span class="nav-text">Hubungi Dosen</span>
               </a>

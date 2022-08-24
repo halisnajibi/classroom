@@ -41,6 +41,7 @@
                         <td><?= $m['kelas'] ?></td>
                         <td><?= $m['tanggal_waktu'] ?></td>
                         <td><?= $m['isi'] ?></td>
+
                         <td>
                           <?php if ($m['file'] != 'tidak ada file') : ?>
                             <a href="<?= base_url('admin/materi_download/' . $m['file']) ?>">Download</a>
@@ -48,7 +49,7 @@
                             <div class="text-danger  "> <?= $m['file'] ?></div>
                           <?php endif; ?>
                         </td>
-                        <td><?= $m['status'] ?></td>
+                        <td><?= $m['status_materi'] ?></td>
                         <td>
                           <div class="d-flex">
                             <a href="<?= base_url('admin/materiUpdate/') . $m['id_materi'] ?>" class="btn btn-primary shadow btn-xs sharp me-1"><i class="fas fa-pencil-alt"></i></a>

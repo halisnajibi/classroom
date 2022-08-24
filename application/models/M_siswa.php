@@ -46,4 +46,41 @@ class M_siswa extends CI_Model
    $this->db->update('tbl_siswa', $upload_image_admin);
   }
  }
+
+ public function getAbsen($id_kelas)
+ {
+  $query = $this->db->query("
+  SELECT * FROM `tbl_buku_absen` INNER JOIN tbl_materi ON tbl_buku_absen.id_materi = tbl_materi.id_materi WHERE id_kls=$id_kelas ORDER BY id_buku_absen DESC LIMIT 1;
+  ");
+  // $this->db->order_by('id_kls', 'DESC');
+  // $query = $this->db->get_where('tbl_buku_absen', ['id_kls' => $id_kelas]);
+  return $query->row_array();
+ }
+
+
+ public function getAbsenSiswa($id_user)
+ {
+  $query = $this->db->query("
+SELECT * FROM `tbl_siswa_absen` INNER JOIN tbl_buku_absen ON tbl_siswa_absen.id_buku_absen = tbl_buku_absen.id_buku_absen INNER JOIN tbl_materi ON tbl_buku_absen.id_materi = tbl_materi.id_materi WHERE tbl_siswa_absen.id_user=$id_user");
+  // $this->db->order_by('id_kls', 'DESC');
+  // $query = $this->db->get_where('tbl_buku_absen', ['id_kls' => $id_kelas]);
+  return $query->result_array();
+ }
+
+
+
+
+ public function insertAbsen()
+ {
+  $akhir = $this->input->post('waktu');
+
+  $data = [
+   'status_absen' => $this->input->post('status'),
+   'keterangan' => $this->input->post('keterangan'),
+   'waktu_absen' => $this->input->post('waktu_absen'),
+   'id_buku_absen' => $this->input->post('id_buku_absen'),
+   'id_user' => $this->input->post('id_user')
+  ];
+  $this->db->insert('tbl_siswa_absen', $data);
+ }
 }

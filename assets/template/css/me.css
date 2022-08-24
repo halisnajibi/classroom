@@ -14,6 +14,10 @@ img.hc {
 	box-sizing: content-box;
 }
 
+.btn-add-remove {
+	display: none;
+}
+
 @media (max-width: 900px) {
 	img.hc {
 		display: block;
