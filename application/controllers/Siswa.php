@@ -120,20 +120,29 @@ Wrong current password !
   //MATERI
   public function materi()
   {
-    $session_user = $this->session->userdata('id_user');
-    $session_level = $this->session->userdata('level');
-    $data['user'] = $this->M_siswa->getAll($session_user);
-    $kelas = $data['user']['id_kls'];
-    $data['jumlah_siswa'] = $this->M_siswa->getJumlahS($kelas);
-    $data['level'] = $session_level;
-    $data['kelas'] = $this->M_kelas->getJoinKelas($session_user);
-    $idkls = $data['user']['id_kls'];
-    $data['materi_kelas'] = $this->M_materi->getMateriByKelas($idkls);
-    $id_user_materi = $data['materi_kelas'][0]['id_user'];
-    $data['user_post_materi'] = $this->M_materi->getUserMateri($id_user_materi);
-    $this->load->view('template/header', $data);
-    $this->load->view('siswa/materi/index', $data);
-    $this->load->view('template/footer');
+    $this->form_validation->set_rules('komentar', 'Komentar', 'required|trim');
+    if ($this->form_validation->run() == false) {
+      $session_user = $this->session->userdata('id_user');
+      $session_level = $this->session->userdata('level');
+      $data['user'] = $this->M_siswa->getAll($session_user);
+      $kelas = $data['user']['id_kls'];
+      $data['jumlah_siswa'] = $this->M_siswa->getJumlahS($kelas);
+      $data['level'] = $session_level;
+      $data['kelas'] = $this->M_kelas->getJoinKelas($session_user);
+      $idkls = $data['user']['id_kls'];
+      $data['materi_kelas'] = $this->M_materi->getMateriByKelas($idkls);
+      $id_user_materi = $data['materi_kelas'][0]['id_user'];
+      $data['user_post_materi'] = $this->M_materi->getUserMateri($id_user_materi);
+      $this->load->view('template/header', $data);
+      $this->load->view('siswa/materi/index', $data);
+      $this->load->view('template/footer');
+    } else {
+      $this->M_siswa->komentar();
+      $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">
+    komentar add !
+        </div>');
+      redirect('siswa/materi');
+    }
   }
 
   //ABSEN

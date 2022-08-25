@@ -21,7 +21,7 @@
          <?php if ($materi['file'] != 'tidak ada file') : ?>
           <a href="<?= base_url('admin/materi_download/' . $materi['file']) ?>" class="btn btn-primary">Download</a>
          <?php endif; ?>
-         <a href="<?= base_url('') ?>" class="btn btn-secondary">Komentar</a>
+         <button type="" name="" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#komentar<?= $materi['id_materi'] ?> ">Komentar</button>
         </div>
        </div>
 
@@ -35,3 +35,40 @@
   </div>
  </div>
 </div>
+
+<!-- modal komentar -->
+<?php foreach ($materi_kelas as $m) : ?>
+ <div class="modal fade" id="komentar<?= $m['id_materi'] ?>">
+  <div class="modal-dialog modal-dialog" role="document">
+   <div class="modal-content">
+    <div class="modal-header">
+     <h5 class="modal-title">Komentar</h5>
+     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+    </div>
+    <div class="modal-body">
+     <?php
+     $id = $m['id_materi'];
+     $query = $this->db->query("SELECT * FROM tbl_komentar_materi INNER JOIN tbl_siswa ON tbl_komentar_materi.id_user = tbl_siswa.id_user WHERE id_materi=$id")->result_array();
+     ?>
+     <?php foreach ($query as $km) : ?>
+      <div class="komentar d-flex justify-content-between">
+       <p><?= $km['nama'] ?></p>
+       <p><?= $km['tanggal_waktu'] ?></p>
+      </div>
+      <h6><?= $km['komentar'] ?></h6>
+      <hr>
+     <?php endforeach; ?>
+     <form action="" method="post">
+      <input type="hidden" name="id_user" value="<?= $user['id_user'] ?>">
+      <input type="hidden" name="id_materi" value="<?= $m['id_materi'] ?>">
+    </div>
+    <div class="modal-footer">
+     <textarea name="komentar" class="form-control" placeholder="Tulis Komentar"></textarea>
+     <?= form_error('komentar', '<small class="text-danger pl-3">', '</small>'); ?>
+     <button type="submit" class="btn btn-secondary">Kirim</button>
+     </form>
+    </div>
+   </div>
+  </div>
+ </div>
+<?php endforeach; ?>

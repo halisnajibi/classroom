@@ -37,4 +37,9 @@ class M_materi extends CI_Model
    return $this->db->get_where('tbl_guru', ['id_user' => $id_user])->row_array();
   }
  }
+
+ public function getKm($id)
+ {
+  return $this->db->get_where('tbl_komentar_materi', ['id_materi' => $id])->result_array();
+ }
 }
