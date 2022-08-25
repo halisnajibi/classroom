@@ -23,6 +23,7 @@ class M_materi extends CI_Model
 
  public function getMateriByKelas($id)
  {
+  $this->db->order_by('id_materi', 'DESC');
   return $this->db->get_where('tbl_materi', ['id_kelas' => $id])->result_array();
  }
 

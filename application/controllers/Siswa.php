@@ -162,4 +162,61 @@ Wrong current password !
       redirect('siswa/absen');
     }
   }
+
+  // TUGAS
+  public function tugas()
+  {
+    $this->form_validation->set_rules('status', 'status', 'required|trim');
+    if ($this->form_validation->run() == false) {
+      $session_user = $this->session->userdata('id_user');
+      $session_level = $this->session->userdata('level');
+      $data['user'] = $this->M_siswa->getAll($session_user);
+      $kelas = $data['user']['id_kls'];
+      $data['jumlah_siswa'] = $this->M_siswa->getJumlahS($kelas);
+      $data['level'] = $session_level;
+      $data['kelas'] = $this->M_kelas->getJoinKelas($session_user);
+      $id_kelas = $data['kelas']['id_kelas'];
+      $data['tugas'] = $this->M_siswa->getTugas($id_kelas);
+      $data['tugasSiswa'] = $this->M_siswa->getTugasSiswa($id_kelas);
+      $this->load->view('template/header', $data);
+      $this->load->view('siswa/tugas/index', $data);
+      $this->load->view('template/footer');
+    } else {
+      //jika ada file upload
+      $file = $_FILES['file_tugas']['name'];
+      if ($file) {
+        $config['upload_path'] = './assets/user/tugas/';
+        $config['allowed_types'] = 'pdf|docx|pptx';
+        $config['max_size']     = '5000';
+        $this->load->library('upload', $config);
+        //lakukan upload
+        if ($this->upload->do_upload('file_tugas')) {
+          $nama_file = $this->upload->data('file_name');
+          $this->M_siswa->tugas($nama_file);
+          redirect('siswa/tugas');
+          $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">
+   tugas terkirim !
+      </div>');
+        } else {
+          $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
+          ' . $this->upload->display_errors()  . '
+            </div>');
+          redirect('siswa/tugas');
+        }
+      } else {
+        // insert data
+        $this->M_siswa->tugas();
+        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">
+   tugas terkirim !
+      </div>');
+        redirect('siswa/tugas');
+      }
+    }
+  }
+
+  public function tugas_download($nama)
+  {
+    $this->load->helper('download');
+    force_download("assets/user/tugas/$nama", NULL);
+  }
 }
