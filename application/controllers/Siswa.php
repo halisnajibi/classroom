@@ -228,4 +228,27 @@ Wrong current password !
     $this->load->helper('download');
     force_download("assets/user/tugas/$nama", NULL);
   }
+
+  public function tugasKomentar()
+  {
+    $this->form_validation->set_rules('komentar', 'Komentar', 'required|trim');
+    if ($this->form_validation->run() == false) {
+      $session_user = $this->session->userdata('id_user');
+      $session_level = $this->session->userdata('level');
+      $data['user'] = $this->M_siswa->getAll($session_user);
+      $kelas = $data['user']['id_kls'];
+      $data['jumlah_siswa'] = $this->M_siswa->getJumlahS($kelas);
+      $data['level'] = $session_level;
+      $data['kelas'] = $this->M_kelas->getJoinKelas($session_user);
+      $id_kelas = $data['kelas']['id_kelas'];
+      $data['tugas'] = $this->M_siswa->getTugas($id_kelas);
+      $data['tugasSiswa'] = $this->M_siswa->getTugasSiswa($id_kelas);
+      $this->load->view('template/header', $data);
+      $this->load->view('siswa/tugas/index', $data);
+      $this->load->view('template/footer');
+    } else {
+      $this->M_siswa->komentarTugas();
+      redirect('siswa/tugas');
+    }
+  }
 }

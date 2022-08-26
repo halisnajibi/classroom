@@ -41,7 +41,7 @@
                     <?php else : ?>
                       <!-- hapus tombol absen -->
                     <?php endif;      ?>
-                    <a href="<?= base_url('') ?>" class="btn btn-secondary">Komentar</a>
+                    <a href="<?= base_url('') ?>" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#komentar<?= $tugas['id_buku_tugas'] ?> ">Komentar</a>
                   </div>
                 </div>
               </div>
@@ -174,3 +174,40 @@
     </div>
   </div>
 </div>
+
+<!-- komentar -->
+<?php foreach ($tugasSiswa as $t) : ?>
+  <div class="modal fade" id="komentar<?= $t['id_buku_tugas'] ?>">
+    <div class="modal-dialog modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Komentar</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <?php
+          $id = $t['id_buku_tugas'];
+          $query = $this->db->query("SELECT * FROM tbl_komentar_tugas INNER JOIN tbl_siswa ON tbl_komentar_tugas.id_user = tbl_siswa.id_user WHERE id_buku_tugas=$id")->result_array();
+          ?>
+          <?php foreach ($query as $kt) : ?>
+            <div class="komentar d-flex justify-content-between">
+              <p><?= $kt['nama'] ?></p>
+              <p><?= $kt['tanggal_waktu'] ?></p>
+            </div>
+            <h6><?= $kt['komentar'] ?></h6>
+            <hr>
+          <?php endforeach; ?>
+          <form action="<?= base_url('siswa/tugasKomentar') ?>" method="post">
+            <input type="hidden" name="id_user" value="<?= $user['id_user'] ?>">
+            <input type="hidden" name="id_buku_tugas" value="<?= $t['id_buku_tugas'] ?>">
+        </div>
+        <div class="modal-footer">
+          <textarea name="komentar" class="form-control" placeholder="Tulis Komentar"></textarea>
+          <?= form_error('komentar', '<small class="text-danger pl-3">', '</small>'); ?>
+          <button type="submit" class="btn btn-secondary">Kirim</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+<?php endforeach; ?>
