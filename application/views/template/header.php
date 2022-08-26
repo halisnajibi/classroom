@@ -246,16 +246,6 @@
                   </ul>
                 </li>
               </ul>
-            <?php elseif ($level == 2) : ?>
-              <a href="<?= base_url('siswa/hubDosen') ?>" class="" aria-expanded="false">
-                <i class="fas fa-user-check"></i>
-                <span class="nav-text">Hubungi Dosen</span>
-              </a>
-            <?php else : ?>
-              <a class="has-arrow " href="javascript:void()" aria-expanded="false">
-                <i class="fas fa-clone"></i>
-                <span class="nav-text">Guru</span>
-              </a>
             <?php endif; ?>
 
           </li>

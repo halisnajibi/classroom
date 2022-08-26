@@ -1,3 +1,20 @@
+<?php
+// jumlah data siswa perkelas
+$id_kls = $kelas['id_kelas'];
+$queryJS = $this->db->query("SELECT * FROM tbl_siswa WHERE id_kls=$id_kls");
+$jumlah_Js = $this->db->affected_rows($queryJS);
+// jumlah data absen per siswa
+$queryabsen = $this->db->query("SELECT * FROM tbl_buku_absen WHERE id_kls=$id_kls");
+$jumlah_absen = $this->db->affected_rows($queryabsen);
+$id_user = $user['id_user'];
+$queryabsenSiswa = $this->db->query("SELECT * FROM tbl_siswa_absen WHERE id_user=$id_user");
+$jumlah_absenSiswa = $this->db->affected_rows($queryabsenSiswa);
+// jumlah data tugas
+$querytugas = $this->db->query("SELECT * FROM tbl_buku_tugas WHERE id_kelas=$id_kls");
+$jumlah_tugas = $this->db->affected_rows($querytugas);
+$querytugas = $this->db->query("SELECT * FROM tbl_siswa_absen WHERE id_user=$id_user");
+$jumlah_tugasSiswa = $this->db->affected_rows($querytugas);
+?>
 <div class="content-body">
  <!-- row -->
  <div class="container-fluid">
@@ -25,7 +42,7 @@
            </span>
            <div class="media-body text-white text-end">
             <p class="mb-1">Siswa Kelas <?= $kelas['kelas'] ?></p>
-            <h3 class="text-white">76</h3>
+            <h3 class="text-white"><?= $jumlah_Js ?></h3>
            </div>
           </div>
          </div>
@@ -47,7 +64,7 @@
              </span>
              <div class="media-body text-white text-end">
               <p class="mb-1">Absen</p>
-              <h3 class="text-white">76/16</h3>
+              <h3 class="text-white"><?= $jumlah_absenSiswa ?>/<?= $jumlah_absen ?></h3>
              </div>
             </div>
            </div>
@@ -64,7 +81,7 @@
              </span>
              <div class="media-body text-white text-end">
               <p class="mb-1">Tugas</p>
-              <h3 class="text-white">76</h3>
+              <h3 class="text-white"><?= $jumlah_tugasSiswa ?>/<?= $jumlah_tugas ?></h3>
              </div>
             </div>
            </div>
