@@ -27,7 +27,7 @@
                       <th>Judul</th>
                       <th>Kelas</th>
                       <th>Tanggal & Waktu</th>
-                      <th>Materi</th>
+                      <th width="70%">Materi</th>
                       <th>Isi</th>
                       <th>Status</th>
                       <th>Action</th>
@@ -44,7 +44,7 @@
                         <td><?= $m['judul'] ?></td>
                         <td><?= $m['kelas'] ?></td>
                         <td><?= $m['tanggal_waktu'] ?></td>
-                        <td><?= $m['isi'] ?></td>
+                        <td><?= $m['isi']  ?></td>
 
                         <td>
                           <?php if ($m['file'] != 'tidak ada file') : ?>
