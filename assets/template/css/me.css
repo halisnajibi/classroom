@@ -18,6 +18,11 @@ img.hc {
 	display: none;
 }
 
+.modal-balas {
+	margin-left: 100px;
+	margin-top: 40px;
+}
+
 @media (max-width: 900px) {
 	img.hc {
 		display: block;

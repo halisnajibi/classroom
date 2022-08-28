@@ -133,7 +133,7 @@ SELECT * FROM `tbl_buku_tugas` WHERE tbl_buku_tugas.id_kelas=$id_kelas ORDER BY 
   {
     $data = [
       'komentar' => $this->input->post('komentar'),
-      'id_user' => $this->input->post('id_user'),
+      'nama_user' => $this->input->post('nama_user'),
       'id_materi' => $this->input->post('id_materi')
     ];
     $this->db->insert('tbl_komentar_materi', $data);
@@ -143,9 +143,21 @@ SELECT * FROM `tbl_buku_tugas` WHERE tbl_buku_tugas.id_kelas=$id_kelas ORDER BY 
   {
     $data = [
       'komentar' => $this->input->post('komentar'),
-      'id_user' => $this->input->post('id_user'),
-      'id_buku_tugas' => $this->input->post('id_buku_tugas')
+      'nama_user' => $this->input->post('nama_user'),
+      'id_buku_tugas' => $this->input->post('id_buku_tugas'),
+      'status' => 0
     ];
     $this->db->insert('tbl_komentar_tugas', $data);
+  }
+
+  public function tugasKomentarBalas()
+  {
+    $data = [
+      'komentar' => $this->input->post('komentar'),
+      'nama_user' => $this->input->post('nama_user'),
+      'id_materi' => $this->input->post('id_materi'),
+      'status' => $this->input->post('id_kt')
+    ];
+    $this->db->insert('tbl_komentar_materi', $data);
   }
 }

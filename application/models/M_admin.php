@@ -204,4 +204,132 @@ class M_admin extends CI_Model
   $this->db->where('id_buku_absen', $id);
   $this->db->update('tbl_buku_absen', $data);
  }
+
+ // Tugas
+ public function getAllTugas()
+ {
+  $this->db->select('*');
+  $this->db->from('tbl_kelas');
+  $this->db->join('tbl_buku_tugas', 'tbl_buku_tugas.id_kelas = tbl_kelas.id_kelas');
+  $query = $this->db->get()->result_array();
+  return $query;
+ }
+
+ public function getTugasById($id)
+ {
+  $this->db->select('*');
+  $this->db->from('tbl_kelas');
+  $this->db->join('tbl_buku_tugas', 'tbl_buku_tugas.id_kelas = tbl_kelas.id_kelas');
+  $this->db->where('id_buku_tugas', $id);
+  $query = $this->db->get()->row_array();
+  return $query;
+ }
+
+ public function insertTugas($file = null)
+ {
+  if ($file != null) {
+   $data = [
+    'waktu_mulai' => $this->input->post('wm'),
+    'waktu_akhir' => $this->input->post('wa'),
+    'waktu_toleransi' => $this->input->post('wt'),
+    'id_kelas' => $this->input->post('kelas'),
+    'judul' => $this->input->post('judul'),
+    'penjelasan' => $this->input->post('penjelasan'),
+    'file' => $file
+   ];
+   $this->db->insert('tbl_buku_tugas', $data);
+  } else {
+   $data = [
+    'waktu_mulai' => $this->input->post('wm'),
+    'waktu_akhir' => $this->input->post('wa'),
+    'waktu_toleransi' => $this->input->post('wt'),
+    'id_kelas' => $this->input->post('kelas'),
+    'judul' => $this->input->post('judul'),
+    'penjelasan' => $this->input->post('penjelasan'),
+    'file' => 'tidak ada file'
+   ];
+   $this->db->insert('tbl_buku_tugas', $data);
+  }
+ }
+
+ public function deleteTugas($id)
+ {
+  $this->db->delete('tbl_buku_tugas', ['id_buku_tugas' => $id]);
+ }
+
+
+ public function UpdateTugas($file = null)
+ {
+  $id = $this->input->post('id_buku_tugas');
+  if ($file != null) {
+   $data = [
+    'waktu_mulai' => $this->input->post('wm'),
+    'waktu_akhir' => $this->input->post('wa'),
+    'waktu_toleransi' => $this->input->post('wt'),
+    'id_kelas' => $this->input->post('kelas'),
+    'judul' => $this->input->post('judul'),
+    'penjelasan' => $this->input->post('penjelasan'),
+    'file' => $file
+   ];
+   $this->db->where('id_buku_tugas', $id);
+   $this->db->update('tbl_buku_tugas', $data);
+  } else {
+   $data = [
+    'waktu_mulai' => $this->input->post('wm'),
+    'waktu_akhir' => $this->input->post('wa'),
+    'waktu_toleransi' => $this->input->post('wt'),
+    'id_kelas' => $this->input->post('kelas'),
+    'judul' => $this->input->post('judul'),
+    'penjelasan' => $this->input->post('penjelasan'),
+    'file' => 'tidak ada file'
+   ];
+   $this->db->where('id_buku_tugas', $id);
+   $this->db->update('tbl_buku_tugas', $data);
+  }
+ }
+
+ public function insertTugasKomentar()
+ {
+  $data = [
+   'komentar' => $this->input->post('komentar'),
+   'id_buku_tugas' => $this->input->post('id_buku_tugas'),
+   'nama_user' => $this->input->post('nama_user'),
+   'status' => 0
+  ];
+  $this->db->insert('tbl_komentar_tugas', $data);
+ }
+
+ public function insertTugasKomentarBalas()
+ {
+  $data = [
+   'komentar' => $this->input->post('komentar'),
+   'id_buku_tugas' => $this->input->post('id_buku_tugas'),
+   'nama_user' => $this->input->post('nama_user'),
+   'status' => $this->input->post('id_kt')
+  ];
+  $this->db->insert('tbl_komentar_tugas', $data);
+ }
+
+
+ public function materiKomentar()
+ {
+  $data = [
+   'komentar' => $this->input->post('komentar'),
+   'id_materi' => $this->input->post('id_materi'),
+   'nama_user' => $this->input->post('nama_user'),
+   'status' => 0
+  ];
+  $this->db->insert('tbl_komentar_materi', $data);
+ }
+
+ public function materiKomentarBalas()
+ {
+  $data = [
+   'komentar' => $this->input->post('komentar'),
+   'id_materi' => $this->input->post('id_materi'),
+   'nama_user' => $this->input->post('nama_user'),
+   'status' => $this->input->post('id_km')
+  ];
+  $this->db->insert('tbl_komentar_materi', $data);
+ }
 }

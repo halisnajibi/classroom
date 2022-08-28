@@ -196,6 +196,7 @@
               <ul aria-expanded="false">
                 <li><a href="<?= base_url('admin/teori') ?>">Theory</a></li>
                 <li><a href="<?= base_url('admin/absen') ?>">Presence</a></li>
+                <li><a href="<?= base_url('admin/tugas') ?>">Tugas</a></li>
               </ul>
             <?php elseif ($level == 2) : ?>
               <a href="<?= base_url('siswa/absen') ?>" class="" aria-expanded="false">

@@ -23,6 +23,7 @@
                   <thead>
                     <tr>
                       <th>#</th>
+                      <th>Komentar</th>
                       <th>Judul</th>
                       <th>Kelas</th>
                       <th>Tanggal & Waktu</th>
@@ -37,6 +38,9 @@
                     <?php foreach ($materi as $m) : ?>
                       <tr>
                         <td><?= $i++; ?></td>
+                        <td>
+                          <button type="" name="" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#komentar<?= $m['id_materi'] ?> ">Komentar</button>
+                        </td>
                         <td><?= $m['judul'] ?></td>
                         <td><?= $m['kelas'] ?></td>
                         <td><?= $m['tanggal_waktu'] ?></td>
@@ -67,3 +71,88 @@
       </div>
     </div>
   </div>
+
+
+  <?php foreach ($materi as $m) : ?>
+    <div class="modal fade" id="komentar<?= $m['id_materi'] ?>">
+      <div class="modal-dialog modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Komentar</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body">
+            <?php
+            $id_bm = $m['id_materi'];
+            $queryS = $this->db->query(
+              "SELECT * FROM tbl_komentar_materi WHERE status='0' AND id_materi=$id_bm"
+            )->result_array();
+            ?>
+            <?php foreach ($queryS as $kt) : ?>
+              <div class="komentar d-flex justify-content-between">
+                <p><?= $kt['nama_user'] ?></p>
+                <p><?= $kt['tanggal_waktu'] ?></p>
+              </div>
+              <h6><?= $kt['komentar'] ?></h6>
+              <span class="badge rounded-pill bg-primary" data-bs-toggle="modal" data-bs-target="#balaskomentar<?= $kt['id_km'] ?>">Balas</span>
+              <hr>
+              <!-- balasan koemntar -->
+              <?php
+
+              $id_komen = $kt['id_km'];
+              $query_bls = $this->db->query("SELECT * FROM tbl_komentar_materi WHERE status=$id_komen AND id_materi=$id_bm")->result_array();
+              foreach ($query_bls as $balasan) :
+              ?>
+                <div class="ms-5">
+                  <div class="balas-komentar d-flex justify-content-between">
+                    <p><?= $balasan['nama_user'] ?></p>
+                    <p><?= $balasan['tanggal_waktu'] ?></p>
+                  </div>
+                  <p><?= $balasan['komentar'] ?></p>
+                  <hr>
+                </div>
+              <?php endforeach; ?>
+              <!-- end -->
+              <!-- modal balas komentar -->
+              <div class="modal fade modal-balas" id="balaskomentar<?= $kt['id_km'] ?>">
+                <div class="modal-dialog modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">Balas Komentar</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                      <form action="<?= base_url('admin/materiKomentarBalas') ?>" method="post">
+                        <div class="d-flex">
+                          <input type="hidden" name="id_km" value="<?= $kt['id_km'] ?>">
+                          <input type="hidden" name="nama_user" value="<?= $user['nama'] ?>">
+                          <input type="hidden" name="id_materi" value="<?= $m['id_materi'] ?>">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+
+                      <textarea name="komentar" class="form-control" placeholder="Balasan Komentar"></textarea>
+                      <?= form_error('komentar', '<small class="text-danger pl-3">', '</small>'); ?>
+                      <button type="submit" class="btn btn-secondary">Kirim</button>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+            <?php endforeach; ?>
+            <form action="<?= base_url('admin/materiTugas') ?>" method="post">
+              <input type="hidden" name="nama_user" value="<?= $user['nama'] ?>">
+              <input type="hidden" name="id_materi" value="<?= $m['id_materi'] ?>">
+          </div>
+          <div class="modal-footer">
+            <textarea name="komentar" class="form-control" placeholder="Tulis Komentar"></textarea>
+            <?= form_error('komentar', '<small class="text-danger pl-3">', '</small>'); ?>
+            <button type="submit" class="btn btn-secondary">Kirim</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  <?php endforeach; ?>

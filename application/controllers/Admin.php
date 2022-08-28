@@ -382,6 +382,51 @@ Wrong current password !
   }
 
 
+  public function materiKomentar()
+  {
+    $this->form_validation->set_rules('komentar', 'Komentar', 'required');
+    if ($this->form_validation->run() == false) {
+      $session_user = $this->session->userdata('id_user');
+      $session_level = $this->session->userdata('level');
+      $data['user'] = $this->M_admin->getAll($session_user);
+      $data['kelas'] = $this->M_kelas->getJoinKelas($session_user);
+      $id = $data['kelas']['id_kelas'];
+      $data['tugas'] = $this->M_admin->getTugasById($id);
+      $data['level'] = $session_level;
+      $data['kelas'] = $this->M_kelas->getAllClass();
+      $this->load->view('template/header', $data);
+      $this->load->view('admin/teori/teori-view', $data);
+      $this->load->view('template/footer');
+    } else {
+      $this->M_admin->materiKomentar();
+      redirect('admin/teori/teori-view');
+    }
+  }
+
+  public function materiKomentarBalas()
+  {
+    $this->form_validation->set_rules('komentar', 'Komentar', 'required');
+    if ($this->form_validation->run() == false) {
+      $session_user = $this->session->userdata('id_user');
+      $session_level = $this->session->userdata('level');
+      $data['user'] = $this->M_admin->getAll($session_user);
+      $data['kelas'] = $this->M_kelas->getJoinKelas($session_user);
+      $id = $data['kelas']['id_kelas'];
+      $data['tugas'] = $this->M_admin->getTugasById($id);
+      $data['level'] = $session_level;
+      $data['kelas'] = $this->M_kelas->getAllClass();
+      $this->load->view('template/header', $data);
+      $this->load->view('admin/teori/teori-view', $data);
+      $this->load->view('template/footer');
+    } else {
+      $this->M_admin->materiKomentarBalas();
+      redirect('admin/teori/teori-view');
+    }
+  }
+
+
+
+
   // ABSEN
   public function absen()
   {
@@ -436,5 +481,177 @@ Wrong current password !
        absen deletd!
           </div>');
     redirect('admin/absen/absen-view');
+  }
+
+  // TUGAS
+  public function tugas()
+  {
+    $session_user = $this->session->userdata('id_user');
+    $session_level = $this->session->userdata('level');
+    $data['user'] = $this->M_admin->getAll($session_user);
+    $data['tugas'] = $this->M_admin->getAllTugas();
+    $data['level'] = $session_level;
+    $this->load->view('template/header', $data);
+    $this->load->view('admin/tugas/index', $data);
+    $this->load->view('template/footer');
+  }
+
+  public function tugasAdd()
+  {
+    $this->form_validation->set_rules('judul', 'Judul', 'required|trim');
+    if ($this->form_validation->run() == false) {
+      $session_user = $this->session->userdata('id_user');
+      $session_level = $this->session->userdata('level');
+      $data['user'] = $this->M_admin->getAll($session_user);
+      $data['tugas'] = $this->M_admin->getAllTugas();
+      $data['level'] = $session_level;
+      $data['kelas'] = $this->M_kelas->getAllClass();
+      $this->load->view('template/header', $data);
+      $this->load->view('admin/tugas/tugas-add', $data);
+      $this->load->view('template/footer');
+    } else {
+      //berhasil validasi
+      //cek apakah ada file
+      $file = $_FILES['file']['name'];
+      if ($file) {
+        //jalnkan validasi file
+        $config['upload_path'] = './assets/user/tugas/';
+        $config['allowed_types'] = 'pdf|ppt|pptx|docx|xlsx';
+        $config['max_size']     = '5000';
+        $this->load->library('upload', $config);
+        if ($this->upload->do_upload('file')) {
+          $new_file = $this->upload->data('file_name');
+          $this->M_admin->insertTugas($new_file);
+          $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">
+       tugas add!
+          </div>');
+          redirect('admin/tugas/index');
+        } else {
+          $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
+          ' . $this->upload->display_errors()  . '
+            </div>');
+          redirect('admin/tugas/indexd');
+        }
+      } else {
+        //jika tidak ada file
+        $this->M_admin->insertTugas();
+        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">
+       tugas add!
+          </div>');
+        redirect('admin/tugas/index');
+      }
+    }
+  }
+
+  public function tugasDownload($nama)
+  {
+    $this->load->helper('download');
+    force_download("assets/user/tugas/$nama", NULL);
+  }
+
+  public function tugasDelete($id)
+  {
+    $this->M_admin->deleteTugas($id);
+    $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">
+       tugas delete!
+          </div>');
+    redirect('admin/tugas/index');
+  }
+
+  public function tugasUpdate($id)
+  {
+    $this->form_validation->set_rules('judul', 'Judul', 'required');
+    if ($this->form_validation->run() == false) {
+      $session_user = $this->session->userdata('id_user');
+      $session_level = $this->session->userdata('level');
+      $data['user'] = $this->M_admin->getAll($session_user);
+      $data['tugas'] = $this->M_admin->getTugasById($id);
+      $data['level'] = $session_level;
+      $data['kelas'] = $this->M_kelas->getAllClass();
+      $this->load->view('template/header', $data);
+      $this->load->view('admin/tugas/tugas-update', $data);
+      $this->load->view('template/footer');
+    } else {
+      //berhasil validasi
+      //cek file
+      $file = $_FILES['file']['name'];
+      if ($file) {
+        //insert ada file
+        //cek validasi file
+        $config['upload_path'] = './assets/user/tugas/';
+        $config['allowed_types'] = 'pdf|ppt|pptx|docx|xlsx';
+        $config['max_size']     = '5000';
+        $this->load->library('upload', $config);
+        if ($this->upload->do_upload('file')) {
+          $session_user = $this->session->userdata('id_user');
+          $session_level = $this->session->userdata('level');
+          $data['user'] = $this->M_admin->getAll($session_user);
+          $data['level'] = $session_level;
+          $data['tugas'] = $this->M_admin->getTugasById($id);
+          $file_lama  = $data['tugas']['file'];
+          unlink(FCPATH . 'assets/user/tugas/' . $file_lama);
+          $new_file = $this->upload->data('file_name');
+          $this->M_admin->updateTugas($new_file);
+          $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">
+       materi updated!
+          </div>');
+          redirect('admin/tugas');
+        } else {
+          $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
+          ' . $this->upload->display_errors()  . '
+            </div>');
+          redirect('admin/teori/teori-update');
+        }
+      } else {
+        //insert tanpa file
+        $this->M_admin->updateTugas();
+        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">
+       materi updated!
+          </div>');
+        redirect('admin/tugas');
+      }
+    }
+  }
+
+  public function tugasKomentar()
+  {
+    $this->form_validation->set_rules('komentar', 'Komentar', 'required');
+    if ($this->form_validation->run() == false) {
+      $session_user = $this->session->userdata('id_user');
+      $session_level = $this->session->userdata('level');
+      $data['user'] = $this->M_admin->getAll($session_user);
+      $data['kelas'] = $this->M_kelas->getJoinKelas($session_user);
+      $id = $data['kelas']['id_kelas'];
+      $data['tugas'] = $this->M_admin->getTugasById($id);
+      $data['level'] = $session_level;
+      $data['kelas'] = $this->M_kelas->getAllClass();
+      $this->load->view('template/header', $data);
+      $this->load->view('admin/tugas/tugas-update', $data);
+      $this->load->view('template/footer');
+    } else {
+      $this->M_admin->insertTugasKomentar();
+      redirect('admin/tugas');
+    }
+  }
+
+  public function tugasKomentarBalas()
+  {
+    $this->form_validation->set_rules('komentar', 'Komentar', 'required');
+    if ($this->form_validation->run() == false) {
+      $session_user = $this->session->userdata('id_user');
+      $session_level = $this->session->userdata('level');
+      $data['user'] = $this->M_admin->getAll($session_user);
+      $data['kelas'] = $this->M_kelas->getJoinKelas($session_user);
+      $id = $data['kelas']['id_kelas'];
+      $data['tugas'] = $this->M_admin->getTugasById($id);
+      $data['level'] = $session_level;
+      $data['kelas'] = $this->M_kelas->getAllClass();
+      $this->load->view('template/header', $data);
+      $this->load->view('admin/tugas/tugas-update', $data);
+      $this->load->view('template/footer');
+    } else {
+      $this->M_admin->insertTugasKomentarBalas();
+      redirect('admin/tugas');
+    }
   }
 }
