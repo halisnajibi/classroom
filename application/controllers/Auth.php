@@ -66,9 +66,7 @@ Wrong Password!
 			$this->load->view('auth/regestrasi');
 		} else {
 			$this->M_auth->insertreg();
-			$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">
- Congratulation! your account has been created. Please fill in bio !!
-</div>');
+			$this->session->set_flashdata('flash', 'berhasil');
 
 			$dataSes = [
 				'username' => $username

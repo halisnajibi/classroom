@@ -8,7 +8,8 @@
             <h4 class="card-title">Data Absen <?= $kelas['nama'] ?></h4>
             <?php
             date_default_timezone_set('Asia/Makassar');
-            $waktu_sekarang =  date('h:i:s');
+            $waktu_sekarang =  date('H:i:s');
+            echo $waktu_sekarang;
             $id_buku_absen = $absen['id_buku_absen'];
             $id_user = $user['id_user'];
             $query = $this->db->query("SELECT * FROM `tbl_siswa_absen` WHERE id_buku_absen=$id_buku_absen AND id_user=$id_user");
@@ -20,6 +21,7 @@
               <?php  ?>
               <?php
               if ($waktu_sekarang > $absen['jam_mulai'] && $waktu_sekarang < $absen['jam_toleransi']) : ?>
+
                 <button type="" name="" class="btn btn-primary btn-add" data-bs-toggle="modal" data-bs-target="#addmodal">Absen</button>
               <?php endif; ?>
             <?php else : ?>

@@ -29,7 +29,7 @@
                 <div class="col-md-6">
                     <div class="authincation-content">
                         <div class="row no-gutters">
-                            <div class="col-xl-12">
+                            <div class="col-md-12">
                                 <div class="auth-form">
                                     <div class="text-center mb-3">
                                         <a href="<?= base_url() ?>"><img src="<?= base_url('assets/template/images/logo.png') ?>" alt="" width="100"></a>
@@ -48,7 +48,7 @@
                                             <?= form_error('password', '<small class="text-danger pl-3">', '</small>'); ?>
                                         </div>
                                         <div class="row d-flex justify-content-between mt-4 mb-2">
-                                            <!-- <div class="mb-3">
+                                          <!--   <div class="mb-3">
                                                 <div class="form-check custom-checkbox ms-1">
                                                     <input type="checkbox" class="form-check-input" id="basic_checkbox_1">
                                                     <label class="form-check-label" for="basic_checkbox_1">Remember my preference</label>
@@ -66,9 +66,15 @@
                                         <button type="submit" class="btn btn-secondary btn-block mt-3">Register</button></a>
                                 </div>
                             </div>
+                       
+
                         </div>
                     </div>
                 </div>
+                 <div class="col-md-6">
+                              <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+<lottie-player src="https://assets6.lottiefiles.com/packages/lf20_jcikwtux.json"  background="transparent"  speed="1"  style="width: 500px; height: 500px;"  loop  autoplay></lottie-player>
+                        </div>  
             </div>
         </div>
     </div>
@@ -80,6 +86,7 @@
     <script src="<?= base_url('assets/template') ?>/vendor/global/global.min.js"></script>
     <script src="<?= base_url('assets/template') ?>/js/custom.min.js"></script>
     <script src="<?= base_url('assets/template') ?>/js/dlabnav-init.js"></script>
+
 </body>
 
 </html>

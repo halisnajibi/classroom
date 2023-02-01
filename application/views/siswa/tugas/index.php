@@ -34,9 +34,10 @@
                        <?php
                         if ($cek == 0) : ?>
                          <!-- tampilkan tombol absen -->
+                         <button type="" name="" class="btn btn-success btn-add" data-bs-toggle="modal" data-bs-target="#addmodal<?= $tugas['id_buku_tugas'] ?>">Kirim</button>
                          <?php
                           if ($waktu_sekarang > $tugas['waktu_mulai'] && $waktu_sekarang < $tugas['waktu_toleransi']) : ?>
-                           <button type="" name="" class="btn btn-success btn-add" data-bs-toggle="modal" data-bs-target="#addmodal<?= $tugas['id_buku_tugas'] ?>">Kirim</button>
+
                          <?php endif; ?>
                        <?php else : ?>
                          <!-- hapus tombol absen -->
